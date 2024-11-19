@@ -1,15 +1,18 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'http://localhost:8080'; // Replace with your Spring Boot server URL
-
+const API_BASE_URL = 'http://localhost:8080'; 
 const SaleService = {
   /**
    * Initialize the database with sales data.
    * @returns {Promise<string>} - Message from the server.
    */
   initializeDatabase: async () => {
-    const response = await axios.post(`${API_BASE_URL}/initialize-db`);
-    return response.data;
+    try {
+      const response = await axios.post(`${API_BASE_URL}/initialize-db`);
+      return response.data;
+    } catch (error) {
+      throw new Error('Error initializing database.');
+    }
   },
 
   /**
@@ -17,12 +20,16 @@ const SaleService = {
    * @param {number} page - Page number for the sales data (default 0).
    * @param {number} pageSize - Number of items per page (default 10).
    * @returns {Promise<object>} - Paginated sales data.
-   */
+   
   fetchAllSales: async (page = 0, pageSize = 10) => {
-    const response = await axios.get(`${API_BASE_URL}/sales/all`, {
-      params: { page, pageSize },
-    });
-    return response.data;
+    try {
+      const response = await axios.get(`${API_BASE_URL}/sales/all`, {
+        params: { page, pageSize },
+      });
+      return response.data;
+    } catch (error) {
+      throw new Error('Error fetching sales data.');
+    }
   },
 
   /**
@@ -31,10 +38,14 @@ const SaleService = {
    * @returns {Promise<object>} - Data about sales for the selected month.
    */
   fetchMonthlyStatistics: async (selectedMonth) => {
-    const response = await axios.get(`${API_BASE_URL}/sales/month/stat-data`, {
-      params: { selectdmonth: selectedMonth },
-    });
-    return response.data;
+    try {
+      const response = await axios.get(`${API_BASE_URL}/sales/month/stat-data`, {
+        params: { selectedMonth },
+      });
+      return response.data;
+    } catch (error) {
+      throw new Error('Error fetching monthly statistics.');
+    }
   },
 
   /**
@@ -43,10 +54,14 @@ const SaleService = {
    * @returns {Promise<object>} - Bar chart data.
    */
   fetchBarGraphData: async (selectedMonth) => {
-    const response = await axios.get(`${API_BASE_URL}/sales/month/bar-graph`, {
-      params: { selectdmonth: selectedMonth },
-    });
-    return response.data;
+    try {
+      const response = await axios.get(`${API_BASE_URL}/sales/month/bar-graph`, {
+        params: { selectedMonth },
+      });
+      return response.data;
+    } catch (error) {
+      throw new Error('Error fetching bar graph data.');
+    }
   },
 
   /**
@@ -55,10 +70,14 @@ const SaleService = {
    * @returns {Promise<object>} - Pie chart data.
    */
   fetchPieChartData: async (selectedMonth) => {
-    const response = await axios.get(`${API_BASE_URL}/sales/month/pi-graph`, {
-      params: { selectdmonth: selectedMonth },
-    });
-    return response.data;
+    try {
+      const response = await axios.get(`${API_BASE_URL}/sales/month/pi-graph`, {
+        params: { selectedMonth },
+      });
+      return response.data;
+    } catch (error) {
+      throw new Error('Error fetching pie chart data.');
+    }
   },
 
   /**
@@ -67,10 +86,14 @@ const SaleService = {
    * @returns {Promise<object>} - Combined data for the selected month.
    */
   fetchAllCombinedData: async (selectedMonth) => {
-    const response = await axios.get(`${API_BASE_URL}/sales/month/all-combine`, {
-      params: { selectdmonth: selectedMonth },
-    });
-    return response.data;
+    try {
+      const response = await axios.get(`${API_BASE_URL}/sales/month/all-combine`, {
+        params: { selectedMonth },
+      });
+      return response.data;
+    } catch (error) {
+      throw new Error('Error fetching combined data.');
+    }
   },
 };
 
